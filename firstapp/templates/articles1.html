@@ -1,0 +1,14 @@
+<html>
+<head>
+	<title>MAAAAIN</title>
+</head>
+<body>
+{% for article in articles %}
+	<h6>DATE:{{ article.article_date }}</h6>
+	<h4><a href = "/articles/get/{{ article.id }}/">{{ article.article_title }}</a></h4>
+	<p>{{ article.article_text }}</p>
+	<p>HEARTS: {{ article.article.likes }}</p>
+	<hr>
+{% endfor %}
+</body>
+</html>

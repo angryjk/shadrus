@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{% block article %}
+<h4>ДАТА:{{ article.article_date }}</h4>
+<h2>ЗАГОЛОВОК:{{ article.article_title }}</h2>
+<p>ТЕКСТ: {{ article.article_text }}</p>
+<p><img src="{% static "like.png" %}" width ="15" height ="15"> {{ article.article_likes }}</p>
+<hr>
+<div class="large-offset-1 large-8 columns">
+<p>Коментарі</p>
+{% for comment in comments %}
+	<p>{{ comment.comments_text  }}</p>
+	<hr>
+{% endfor %}
+</div>
+	<div class="row">
+        <div class="large-3 large-offset-5 columns">
+            <ul class="pagination">
+                {% if comments.has_previous %}
+                    <li class="arrow"><a href="/articles/get/{{ article.id }}/page/{{ comments.previous_page_number }}/">&laquo;</a></li>
+                {% else %}
+                    <li class="arrow unavailable"><a href="">&laquo;</a></li>
+                {% endif %}
+                {% for page in comments.paginator.page_range %}
+                    {% if page == comments.number %}
+                        <li class="current"><a href="/articles/get/{{ article.id }}/page/{{ page }}/">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="/articles/get/{{ article.id }}/page/{{ page }}/">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if comments.has_next %}
+                    <li class="arrow"><a href="/articles/get/{{ article.id }}/page/{{ comments.next_page_number }}/">&raquo;</a></li>
+                {% else %}
+                    <li class="arrow unavailable"><a href="">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+
+	{% if username %}
+	<form action="/articles/addcomment/{{ article.id }}/" method ="post">
+	{% csrf_token %}
+	{{ form }}
+	<input type ="submit" class="button" value="Додати писанину">
+	</form>
+	{% endif %}
+
+{% endblock %}

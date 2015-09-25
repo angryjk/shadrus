@@ -1,0 +1,16 @@
+<html>
+<body>
+<head>
+	<title> Стаття </title>
+</head>
+</body>
+<h4>ДАТА:{{ article.article_date }}</h4>
+<h2>ЗАГОЛОВОК:{{ article.article_title }}</h2>
+<p>ТЕКСТ: {{ article.article_text }}</p>
+<hr>
+<p>Коментарі</p>
+{% for comment in comments %}
+	<p>{{ comment.comments_text  }}</p>
+	<hr>
+{% endfor %}
+</html>
